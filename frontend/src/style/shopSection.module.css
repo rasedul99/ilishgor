@@ -1,0 +1,17 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 200px));
+  grid-gap: 10px;
+  grid-auto-flow: dense;
+}
+.card {
+  border: 1px solid rgb(218, 215, 215);
+  padding: 5px;
+  border-radius: 5px;
+}
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+}
