@@ -1,9 +1,11 @@
 import cors from "cors";
+import dotenv from "dotenv";
 import express from "express";
+import connectDatabase from "./config/MongoDb.js";
 import products from "./data/Product.js";
 
-const port = 5000;
-
+dotenv.config();
+connectDatabase();
 const app = express();
 app.use(cors());
 // Load product from server
@@ -18,6 +20,9 @@ app.get("/api/product/:id", (req, res) => {
 app.get("/", (req, res) => {
   res.send("server is running");
 });
+const port = process.env.PORT;
+console.log(port);
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });

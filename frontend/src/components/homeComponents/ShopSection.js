@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import styles from "../../style/shopSection.module.css";
 const ShopSection = () => {
   const [products, setProducts] = useState([""]);
@@ -22,7 +23,9 @@ const ShopSection = () => {
                   <img src={product.image} />
                 </div>
                 <div className={styles.cartText}>
-                  <p>{product.name}</p>
+                  <Link to={`/product/${product._id}`}>
+                    <p>{product.name}</p>
+                  </Link>
                   <p>{product.rating}</p>
                   <p>{product.price}</p>
                 </div>

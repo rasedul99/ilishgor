@@ -1,0 +1,33 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+}
+.left {
+  margin: 20px;
+  padding: 2px;
+}
+.left img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+}
+.info {
+  height: 100px;
+  width: 70%;
+}
+.price,
+.status,
+.reviews,
+.quantity {
+  display: flex;
+  justify-content: space-between;
+  padding: 2px;
+  border-top: 2px solid rgb(234, 223, 223);
+  border-left: 2px solid rgb(234, 223, 223);
+  border-right: 2px solid rgb(234, 223, 223);
+}
+
+.btn {
+}
