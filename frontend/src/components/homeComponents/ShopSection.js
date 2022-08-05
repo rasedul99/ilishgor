@@ -1,21 +1,20 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { listProduct } from "../../Redux/Actions/ProductActions";
 import styles from "../../style/shopSection.module.css";
 const ShopSection = () => {
-  const [products, setProducts] = useState([""]);
+  const dispatch = useDispatch();
+  const productList = useSelector((state) => state.productList);
+  console.log(productList);
+  const { loading, error, products } = productList;
   useEffect(() => {
-    const fetchProducts = async () => {
-      const { data } = await axios.get("http://localhost:5000/api/products");
-      console.log(data);
-      setProducts(data);
-    };
-    fetchProducts();
-  }, []);
+    dispatch(listProduct());
+  }, [dispatch]);
   return (
     <div>
       <div className={styles.container}>
-        {products.map((product) => {
+        {products?.map((product) => {
           return (
             <>
               <div className={styles.card}>
