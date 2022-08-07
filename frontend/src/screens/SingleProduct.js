@@ -1,33 +1,33 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { listProductDetails } from "../Redux/Actions/ProductActions";
 import styles from "../style/singleProduct.module.css";
 
 const SingleProduct = () => {
   const { id } = useParams();
-  const [product, setProduct] = useState({});
+  const dispatch = useDispatch();
+  const productDeatails = useSelector((state) => {
+    return state.productDetails;
+  });
+
+  const { loading, error, product } = productDeatails;
+
   useEffect(() => {
-    const fetchProducts = async () => {
-      const { data } = await axios.get(
-        `http://localhost:5000/api/product/${id}`
-      );
-      console.log(data);
-      setProduct(data);
-    };
-    fetchProducts();
-  }, [id]);
+    dispatch(listProductDetails(id));
+  }, [dispatch, id]);
   return (
     <div className={styles.container}>
       <div className={styles.left}>
-        <img src={product.image} />
+        <img src={product?.image} />
       </div>
       <div className={styles.right}>
-        <h3>{product.name}</h3>
-        <p>{product.description}</p>
+        <h3>{product?.name}</h3>
+        <p>{product?.description}</p>
         <div className={styles.info}>
           <div className={styles.price}>
             <level>Price</level>
-            <p>{product.price}</p>
+            <p>{product?.price}</p>
           </div>
           <div className={styles.status}>
             <level>Status</level>
