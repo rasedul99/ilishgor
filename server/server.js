@@ -5,14 +5,17 @@ import connectDatabase from "./config/MongoDb.js";
 import ImportData from "./Dataimport.js";
 import { errorHandler, notFound } from "./Middleware/Errors.js";
 import productRoute from "./Routes/ProductRoutes.js";
+import userRouter from "./Routes/UserRoutes.js";
 
 dotenv.config();
 connectDatabase();
 const app = express();
 app.use(cors());
+app.use(express.json());
 // API
 app.use("/api/import", ImportData);
 app.use("/api/products", productRoute);
+app.use("/api/users", userRouter);
 // ERROR HANDLER
 app.use(notFound);
 app.use(errorHandler);
