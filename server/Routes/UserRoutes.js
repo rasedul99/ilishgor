@@ -29,7 +29,7 @@ userRouter.post(
 );
 // REGISTER
 userRouter.post(
-  "/",
+  "/register",
   asyncHandler(async (req, res) => {
     const { name, email, password } = req.body;
     const userExists = await User.findOne({ email });
