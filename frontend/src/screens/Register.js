@@ -19,6 +19,7 @@ const Register = () => {
     dispatch(register(name, email, password));
   };
   if (userInfo) {
+    localStorage.setItem()
     navigate("/");
   }
   return (
