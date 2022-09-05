@@ -13,6 +13,7 @@ const Login = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (userInfo) {
+      console.log(userInfo);
       navigate("/");
     }
   }, [userInfo]);

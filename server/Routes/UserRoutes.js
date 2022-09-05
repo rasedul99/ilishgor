@@ -57,10 +57,11 @@ userRouter.post(
   })
 );
 // PROFILE
-userRouter.post(
+userRouter.get(
   "/profile",
   protect,
   asyncHandler(async (req, res) => {
+    console.log(req);
     const user = await User.findById(req.user._id);
     if (user) {
       res.json({
@@ -69,6 +70,35 @@ userRouter.post(
         email: user.email,
         isAdmin: user.isAdmin,
         createdAt: user.createdAt,
+      });
+    } else {
+      res.status(404);
+      throw new Error("Invalid Email or Password");
+    }
+  })
+);
+
+// Update Profile
+
+userRouter.put(
+  "/profile",
+  protect,
+  asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id);
+    if (user) {
+      user.name = req.body.name || user.name;
+      user.email = req.body.email || user.email;
+      if (req.body.password) {
+        user.password = user.body.password;
+      }
+      const updatedUser = await user.save();
+      res.json({
+        _id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        isAdmin: updatedUser.isAdmin,
+        createdAt: updatedUser.createdAt,
+        token: generateToken(updatedUser._id),
       });
     } else {
       res.status(404);
