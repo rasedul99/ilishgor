@@ -2,8 +2,10 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import HomeScreen from "./screens/HomeScreen";
 import Login from "./screens/Login";
+import PaymentScreen from "./screens/PaymentScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import Register from "./screens/Register";
+import ShippingScreen from "./screens/ShippingScreen";
 import SingleProduct from "./screens/SingleProduct";
 function App() {
   return (
@@ -14,11 +16,11 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<ProfileScreen />} />
         {/* <Route path="/cart/:id" element={<CartScreen />} /> */}
-        {/* <Route path="/shipping" element={<ShippingScreen />} />
+        <Route path="/shipping" element={<ShippingScreen />} />
         <Route path="/payment" element={<PaymentScreen />} />
-        <Route path="/placeorder" element={<PlaceOrderScreen />} />
+        {/* <Route path="/placeorder" element={<PlaceOrderScreen />} />
         <Route path="/order" element={<OrderScreen />} />
-        <Route path="/" element={<NotFound />} /> */}
+        <Route path="/" element={<NotFound />} />   */}
 
         <Route path="product/:id" element={<SingleProduct />} />
       </Routes>
