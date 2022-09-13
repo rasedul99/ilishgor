@@ -1,6 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import Header from "../components/profileComponents/Header";
 import { addToCart } from "../Redux/Actions/cartActions";
 
@@ -20,10 +25,9 @@ const CartScreen = () => {
     dispatch(addToCart(id, qty));
   }, [dispatch, id, qty]);
 
-const checkOutHandler = ()=>{
-  navigate("/")
-
-}
+  const checkOutHandler = () => {
+    navigate("/");
+  };
 
   return (
     <div>
