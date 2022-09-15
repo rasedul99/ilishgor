@@ -1,40 +1,62 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
+import axios from "axios";
 import { BiUserCircle } from "react-icons/bi";
+import { PayPalButton } from "react-paypal-button-v2";
 import { useDispatch, useSelector } from "react-redux";
 import { getOrderDetails } from "../Redux/Actions/orderActions";
 
 const OrderScreen = () => {
   const { id } = useParams();
+  const dispatch = useDispatch();
+  const [sdk, setSdk] = useState(false);
   const cart = useSelector((state) => state.cart);
   const userLogin = useSelector((state) => state.userLogin);
   const orderDetail = useSelector((state) => state.orderDetail);
   const { loading, success, order, error } = orderDetail;
-  console.log(order?.orderItems);
-  const dispatch = useDispatch();
-  console.log(orderDetail);
+
+  const orderPay = useSelector((state) => state.orderPay);
+  const { loading: loadingPay, success: successPay } = orderPay;
 
   useEffect(() => {
+    const addPayPalScript = async () => {
+      const { data: clientId } = await axios.get(
+        "http://localhost:5000/api/config/paypal"
+      );
+      const script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`;
+      script.async = true;
+      script.onload = () => {
+        setSdk(true);
+      };
+      document.body.appendChild(script);
+    };
+    // if (!order || successPay) {
+    //   dispatch({ type: ORDER_PAY_RESET });
     dispatch(getOrderDetails(id));
-  }, []);
+    // } else if (!order.isPaid) {
+    //   addPayPalScript();
+    // } else {
+    //   setSdk(true);
+    // }
+  }, [id, dispatch]);
 
   const { shippingAddress, cartItems } = cart;
-  console.log(cartItems);
   const { userInfo } = userLogin;
 
   // Calculate Data
   const addDecimal = (num) => {
     return (Math.round(num * 100) / 100).toFixed(2);
+
+    if (!loading) {
+      order.itemsPrice = addDecimal(
+        order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+      );
+    }
   };
-  cart.itemsPrice = addDecimal(
-    cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
-  );
-  cart.shippingPrice = addDecimal(cart.itemsPrice > 100 ? 0 : 100);
-  cart.taxPrice = addDecimal(cart.itemsPrice * 0.15);
-  cart.totalPrice = addDecimal(
-    Number(cart.itemsPrice) + Number(cart.taxPrice) + Number(cart.shippingPrice)
-  );
+
   return (
     <div className="max-w-7xl mx-auto my-10 p-5 ">
       <div className="bg-indigo-200  ">
@@ -77,8 +99,9 @@ const OrderScreen = () => {
             <div>
               <strong>Deliver to</strong>
               <p>
-                Address : {shippingAddress.city}, {shippingAddress.address},
-                {shippingAddress.potalCode}
+                Address : {order?.shippingAddress.city},{" "}
+                {order?.shippingAddress.address},
+                {order?.shippingAddress.potalCode}
               </p>
               {order?.isDelivered ? (
                 <>
@@ -133,35 +156,32 @@ const OrderScreen = () => {
                 <td>
                   <strong>Products :</strong>{" "}
                 </td>
-                <td>${cart.itemsPrice}</td>
+                <td>${order?.itemsPrice}</td>
               </tr>
               <tr>
                 <td>
                   <strong>Shipping :</strong>{" "}
                 </td>
-                <td>${cart.shippingPrice}</td>
+                <td>${order?.shippingPrice}</td>
               </tr>
               <tr>
                 <td>
                   <strong>Tax :</strong>{" "}
                 </td>
-                <td>$ {cart.taxPrice}</td>
+                <td>$ {order?.taxPrice}</td>
               </tr>
               <tr>
                 <td>
                   <strong>Total :</strong>{" "}
                 </td>
-                <td>$ {cart.totalPrice}</td>
+                <td>$ {order?.totalPrice}</td>
               </tr>
             </thead>
           </table>
-          <button
-            type="submit"
-            // onClick={placeOrderHandler}
-            className="w-full my-2 uppercase bg-indigo-500 px-3 py-2  text-white"
-          >
-            PayPal
-          </button>
+
+          <div>
+            <PayPalButton amount={345} />
+          </div>
         </div>
       </div>
     </div>

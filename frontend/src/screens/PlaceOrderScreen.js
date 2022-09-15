@@ -78,7 +78,7 @@ const PlaceOrderScreen = () => {
               <p>Pay method :{cart.paymentMethod}</p>
             </div>
           </div>
-          {}
+          
           <div className="flex  items-center">
             <div className="mr-5">
               <BiUserCircle size="55" />
