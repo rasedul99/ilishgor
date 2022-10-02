@@ -36,27 +36,28 @@ const SingleProduct = () => {
           <p>Error:{error}</p>
         </>
       ) : (
-        <>
-          <div className={styles.left}>
-            <img src={product?.image} />
-          </div>
-          <div className={styles.right}>
+        <div className="max-w-7xl mx-auto mt-10 grid grid-cols-1 sm:grid-cols-2">
+          <div>
+            <img src={product?.image} className="max-w-full mx-auto rounded mb-4" />
             <h3>{product?.name}</h3>
             <p>{product?.description}</p>
-            <div className={styles.info}>
-              <div className={styles.price}>
+          </div>
+
+          <div>
+            <div>
+              <div className="flex justify-between p-3 border-x-2 border-t-2  border-gray-200 ">
                 <level>Price</level>
-                <p>{product?.price}</p>
+                <p>${product?.price}</p>
               </div>
-              <div className={styles.status}>
+              <div className="flex justify-between p-3 border-x-2 border-t-2 border-gray-200 ">
                 <level>Status</level>
                 <p> In Stock</p>
               </div>
-              <div className={styles.reviews}>
+              <div className="flex justify-between p-3 border-x-2 border-t-2 border-gray-200 ">
                 <level>Reviews</level>
                 <p> 2 reviews</p>
               </div>
-              <div className={styles.quantity}>
+              <div className="flex justify-between p-3 border-x-2 border-t-2 border-gray-200">
                 <level>Quantity</level>
                 <input
                   onChange={handleQty}
@@ -76,7 +77,7 @@ const SingleProduct = () => {
               />
             </div>
           </div>
-        </>
+        </div>
       )}
     </div>
   );

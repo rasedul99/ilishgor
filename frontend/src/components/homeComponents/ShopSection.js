@@ -38,7 +38,7 @@ const ShopSection = () => {
                     <input
                       type="button"
                       value="View Details"
-                      className="bg-blue-500 w-full py-2  mt-2 rounded"
+                      className="bg-slate-900 text-white w-full py-2  mt-2 rounded"
                     />
                   </Link>
                 </div>
