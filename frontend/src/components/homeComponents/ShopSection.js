@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { listProduct } from "../../Redux/Actions/ProductActions";
-import styles from "../../style/shopSection.module.css";
 const ShopSection = () => {
   const dispatch = useDispatch();
   const productList = useSelector((state) => {
@@ -16,8 +15,8 @@ const ShopSection = () => {
     dispatch(listProduct());
   }, [dispatch]);
   return (
-    <div>
-      <div className={styles.container}>
+    <div className="max-w-7xl mx-auto">
+      <div className=" grid grid-cols-1 gap-4 sm:grid-cols-4 md:grid-cols-6 ">
         {products?.map((product) => {
           return (
             <>
@@ -27,18 +26,21 @@ const ShopSection = () => {
                 <p>Error:{error}</p>
               ) : (
                 <div>
-                  <div className={styles.card}>
-                    <div className={styles.cardImage}>
-                      <img src={product.image} />
-                    </div>
-                    <div className={styles.cartText}>
-                      <Link to={`/product/${product._id}`}>
-                        <p>{product.name}</p>
-                      </Link>
+                  <Link to={`/product/${product._id}`}>
+                    <img src={product.image} className="rounded-md w-full " />
+
+                    <div className="mt-3">
+                      <p className="font-medium">{product.name}</p>
+
                       <p>{product.rating}</p>
-                      <p>{product.price}</p>
+                      <p>${product.price}</p>
                     </div>
-                  </div>
+                    <input
+                      type="button"
+                      value="View Details"
+                      className="bg-blue-500 w-full py-2  mt-2 rounded"
+                    />
+                  </Link>
                 </div>
               )}
             </>
